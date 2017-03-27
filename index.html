@@ -10,8 +10,45 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid jumbotron">
-		<div class="container"></div>
+	<div class="container-fluid jumbotron text-center">
+		<h1>Recipe App</h1>
+		<a href="index.html"><button class="btn btn-info">Recipes</button></a>
+		<a href="timer.html"><button class="btn btn-info">Timer</button></a>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="well">
+					<h4 class="page-header text-center">Recent Recipes</h4>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="well text-center">
+				<h2 class="page-header">Recipes <button class="btn btn-success" data-toggle="modal" data-target="#recipe-modal">New Recipe</button></h2>
+				</div>
+			</div>
+			<div class="modal fade" id="recipe-modal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h3>My Ingredients</h3>
+							<div id="ingredient-list"></div>
+							</div>
+						<div class="modal-body">
+							<form>
+								<input type="text" id="ingredient-input">
+								<button class="btn btn-info">Add Ingredient</button>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-success" data-dismiss="modal">Find Recipes</button>
+
+							<button class="btn btn-primary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
