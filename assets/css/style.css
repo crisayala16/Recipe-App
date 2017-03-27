@@ -2,3 +2,7 @@
 	height: 600px;
 	background: #f57a00;
 }
+input{
+	width: 200px !important;
+	margin: 0 auto;
+}
