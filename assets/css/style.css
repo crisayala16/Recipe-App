@@ -1,8 +1,12 @@
 .well{
 	height: 600px;
-	background: #f57a00;
+	background: #7da3a2;
 }
 input{
 	width: 200px !important;
 	margin: 0 auto;
+}
+.jumbotron{
+	background: url("../images/food-bg.jpg");
+
 }
