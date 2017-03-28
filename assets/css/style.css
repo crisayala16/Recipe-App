@@ -12,3 +12,6 @@ input{
 #timer-box{
 	height: 500px;
 }
+#recipes{
+	overflow: auto;
+}
