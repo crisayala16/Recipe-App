@@ -1,14 +1,21 @@
 .well{
-	height: 600px;
-	background: #7da3a2;
+	height: 40em;
+	background: rgb(125,163,162);
+	opacity: 0.95;
 }
 input{
-	width: 75% !important;
+	width: 60% !important;
 	margin: 0 auto;
 }
-.jumbotron{
+body{
 	background: url("../images/food-bg.jpg");
 }
-#timer-box{
-	height: 500px;
+.btn{
+	margin: 5px;
+}
+#recipes{
+	overflow: auto;
+}
+#recipe-box{
+	border: 2px dashed #fff;
 }
