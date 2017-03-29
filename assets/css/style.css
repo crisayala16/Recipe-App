@@ -15,3 +15,6 @@ input{
 #recipes{
 	overflow: auto;
 }
+button{
+	margin: 5px;
+}
