@@ -29,12 +29,22 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h3>My Ingredients</h3>
+							<div class="row">
+								<div class="col-xs-6">
+									<h3>My Ingredients</h3>
 							<div id="ingredient-list"></div>
 							</div>
+							<div class="col-xs-6">
+								<h3>Food Type</h3>
+								<div id="food-type-area"></div>
+							</div>
+								</div>
+							</div>
+							
 						<div class="modal-body">
 								<label>What king of food are you looking for?</label>
 								<input type="text" id="food-type-input" placeholder="Ex: Mexican, Italian, Asian">
+								<button class="btn btn-info" id="food-type-btn">Add Food Type</button>
 								<input type="text" id="ingredient-input">
 							
 								<button class="btn btn-info" id="add-ingredient">Add Ingredient</button>
