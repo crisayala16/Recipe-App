@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var ingredients = [];
+	var ingredients = ["water", "flour", "eggs", "salt", "milk"];
 	var ingredient;
 	var queryUrl;
 	var currentRecipe;
@@ -16,6 +16,7 @@ $(document).ready(function(){
 		ingredients.push(ingredient);
 		$("#ingredient-list").append("<button class='btn btn-info'>"
 			+ ingredient + "</button>");
+		$("#ingredient-input").val("");
 		console.log(ingredients);
 	});
 	$(document).on("click", "#food-type-btn", function(){
@@ -28,7 +29,7 @@ $(document).ready(function(){
 		var ingredientString = ingredients.join("+");
 		console.log(ingredientString);
 		queryUrl = "https://api.edamam.com/search?q=" + foodType
-		+ "&app_id=06ea1511&app_key=bdeec150a8701cdf840910049d39fb52&from=0&to=1000&calories=gte%20591,%20lte%20722"
+		+ "&app_id=06ea1511&app_key=bdeec150a8701cdf840910049d39fb52&from=0&to=100&calories=gte%20591,%20lte%20722"
 		$.ajax({
 			url: queryUrl,
 			method: "GET"
@@ -53,20 +54,18 @@ $(document).ready(function(){
 						for(var y = 0; y < ingredients.length; y++){
 
 							if(lowerArray.indexOf(ingredients[y]) === -1){
-								lineHasIngredient = false;								
-							} else if(lowerArray.indexOf(ingredients[y]) === 0){
+								lineHasIngredient = false;
+							} 
+							else if(lowerArray.indexOf(ingredients[y]) === 0){
 								lineHasIngredient = true;
-								console.log(lowerArray);
-								console.log(ingredients[y]);
-								console.log("current line matches a user ingredient");
-								matchingLines++;
-								
+								console.log("Match!");
+								matchingLines++;	
+								console.log(matchingLines);
 							}
 						}
 					}
-					console.log(matchingLines);
 				}
-				if(matchingLines === currentRecipe.ingredientLines.length || matchingLines > 3){
+				if(matchingLines === currentRecipe.ingredientLines.length || matchingLines > 2){
 					
 					var div = $("<div id='recipe-box'>");
 					div.append("<h3 class='text-center'>" + currentRecipe.label + "</h3>")
