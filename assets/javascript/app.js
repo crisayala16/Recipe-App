@@ -10,6 +10,9 @@ $(document).ready(function(){
 	var matchingLines = 0;
 	var lineHasIngredient;
 	var foodType = "all";
+	var minCal = "0";
+	var maxCal = "4000";
+	var health = "";
 
 	$(document).on("click", "#add-ingredient", function(){
 		ingredient = $("#ingredient-input").val().trim();
@@ -23,13 +26,17 @@ $(document).ready(function(){
 		foodType = $("#food-type-input").val().trim();
 		$("#food-type-area").html("<button class='btn btn-info'>" + foodType + "</button>");
 		$("#food-type-input").val("");
-	})
-
+	});
 	$(document).on("click", "#find-recipes", function(){
 		var ingredientString = ingredients.join("+");
 		console.log(ingredientString);
+		minCal = $("#min-cal").val().trim();
+		maxCal = $("#max-cal").val().trim();
+		console.log("Min cal: " + minCal);
+		console.log("Max cal: " + maxCal);
 		queryUrl = "https://api.edamam.com/search?q=" + foodType
-		+ "&app_id=06ea1511&app_key=bdeec150a8701cdf840910049d39fb52&from=0&to=100&calories=gte%20591,%20lte%20722"
+		+ "&app_id=06ea1511&app_key=bdeec150a8701cdf840910049d39fb52&from=0&to=100&calories=gte " + minCal +
+		",lte " + maxCal;
 		$.ajax({
 			url: queryUrl,
 			method: "GET"
@@ -65,12 +72,13 @@ $(document).ready(function(){
 						}
 					}
 				}
-				if(matchingLines === currentRecipe.ingredientLines.length || matchingLines > 2){
+				if(matchingLines === currentRecipe.ingredientLines.length || matchingLines > 0){
 					
 					var div = $("<div id='recipe-box'>");
 					div.append("<h3 class='text-center'>" + currentRecipe.label + "</h3>")
 					div.append("<img src='" + currentRecipe.image + "'>");
 					div.append("<h4>" + currentRecipe.source + "</h4>");
+					div.append("<h4>Matching Lines: " + matchingLines + "</h4>");
 					$("#recipes").append(div);
 					console.log("Recipe Posted!");
 				}
