@@ -102,7 +102,7 @@ $(document).on("click", "#find-recipes", function(){
 					var recCalories = Math.round(currentRecipe.calories);
 
 					var div = $("<div class='recipe-box'>");
-					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html' target='_blank'>" + recLabel + "</a></h3>");
+					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
@@ -143,6 +143,7 @@ $(document).on("click", "#find-recipes", function(){
 			console.log(thisLabel);
 			var h2 = $("<h2 class='text-center'>");
 			h2.html(thisLabel);
+			// window.location.replace("recipe.html");
 			$("#full-detail").append(h2);
 			console.log("finished");
 
