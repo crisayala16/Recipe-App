@@ -22,3 +22,12 @@ button{
 .recipe-box{
 	border: 2px dashed #fff;
 }
+#food-type-btn{
+	margin-bottom: 5px;
+}
+#remove-ingredient:hover{
+	color: red;
+}
+.jumbotron{
+	background: #7da3a2;
+}
