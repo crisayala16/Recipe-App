@@ -4,7 +4,6 @@
 	<title>Recipe Detail</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootswatch.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -13,14 +12,56 @@
 <body>
 	<!-- Header jumbotron -->
 	<div class="container-fluid jumbotron text-center">
-		<h1>Recipe App</h1>
+		<h1> Recipe App </h1>
+		<h2> Details for <span class="recipe_name">...</span> </h2>
 	</div>
 	<!-- End of Header -->
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Recipes section -->
 			<div class="col-xs-12">
-				<div class="well text-center" id="recipe-detail"></div>
+				<div class="well text-center" id="recipe-detail">
+					
+					<div class="col-md-4">
+						<h4 class="page-header text-center">Ingredients</h4>
+						<div id="ingredient_list">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<h4 class="page-header recipe_name">...</h4 >
+						<img src="" id="recipe_img">
+					</div>
+
+					<div class="col-md-4">
+						<h4 class="page-header text-center"> Nutrition Information </h4>
+						<table>
+							<tr> <td>Calories: </td> <td id="calories">...</td> </tr>
+
+							<tr> <td>Total Fat: </td> <td id="fat">
+							...</td> </tr>
+
+							<tr> <td>Saturated Fat: </td> <td id="fasat"> ... </td> </tr>
+							<tr> <td>Trans Fat: </td> <td id="trans"> ... </td> </tr>
+							<tr> <td>Carbs: </td> <td id="carbs"> ... </td> </tr>
+							<tr> <td>Sodium: </td> <td id="sodium"> ... </td> </tr>
+							<tr> <td>Fiber: </td> <td id="fiber"> ... </td> </tr>
+							<!--
+						
+							
+							
+							Total Carbohydrate
+							Dietary Fiber == FIBTG
+							Sugars ==> “SUGAR”
+							Protein ==> “PRONCT”
+							Cholesterol ==> CHOLE 
+							Vitamins
+							Calcium
+							-->
+						</table>
+					</div>
+
+				</div>
 			</div>
 			<!-- End of Recipes section -->
 		</div>
@@ -30,6 +71,6 @@
 	<!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
 	<!-- app.js -->
-	<script type="text/javascript" src="assets/javascript/app.js"></script>
+	<script type="text/javascript" src="assets/javascript/recipe-app.js"></script>
 </body>
 </html>

@@ -133,7 +133,7 @@ $(document).on("click", "#find-recipes", function(){
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-					div.append("<h4>" + fullIngredients + "</h4>");
+					// div.append("<h4>" + fullIngredients + "</h4>");
 					$("#recipes").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
@@ -161,6 +161,7 @@ $(document).on("click", "#find-recipes", function(){
 		var order = $(this).attr("order");
 		console.log(this);
 		var thisLabel;
+		var thisUrl;
 		console.log("start");
 
 		database.ref().on("value", function(snapshot){
@@ -168,9 +169,15 @@ $(document).on("click", "#find-recipes", function(){
 			var keys = Object.keys(data);
 			var clickedRecipe = keys[order];
 			thisLabel = data[clickedRecipe].label;
+			thisUrl = data[clickedRecipe].url;
+
 			console.log(thisLabel);
-			var h2 = $("<h2 class='text-center'>");
+			var aTag = $("<a href='" + thisUrl + "' target='_blank'>")
+			var h2 = $("<h2 class='text-center rec-rep-label'>");
 			h2.html(thisLabel);
+			// window.location.replace("recipe.html");
+			aTag.html(h2);
+			$("#recent-recipes").append(aTag);
 			$("#full-detail").append(h2);
 			console.log("finished");
 

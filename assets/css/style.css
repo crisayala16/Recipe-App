@@ -31,3 +31,12 @@ button{
 .jumbotron{
 	background: #7da3a2;
 }
+a{
+	text-decoration: none;
+	text-decoration-line: none;
+}
+a:hover{
+	text-decoration: none;
+	text-decoration-line: none;
+	color: #fff;
+}
