@@ -16,7 +16,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="well">
+				<div class="well" id="recentRecipes">
 					<h4 class="page-header text-center">Recent Recipes</h4>
 				</div>
 			</div>
@@ -29,13 +29,27 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h3>My Ingredients</h3>
+							<div class="row">
+								<div class="col-xs-6">
+									<h3>My Ingredients</h3>
 							<div id="ingredient-list"></div>
 							</div>
-						<div class="modal-body">
-				
-								<input type="text" id="ingredient-input">
+							<div class="col-xs-6">
+								<h3>Food Type</h3>
+								<div id="food-type-area"></div>
+							</div>
+								</div>
+							</div>
 							
+						<div class="modal-body">
+								<label>What kind of food are you looking for?</label>
+								<input type="text" id="food-type-input" placeholder="Ex: Mexican, Italian, Asian">
+								<button class="btn btn-info" id="food-type-btn">Add Food Type</button>
+								<label>Minimum Calories (per serving)</label>
+								<input type="text" id="min-cal" value="0">
+								<label>Maximum Calories (per serving)</label>
+								<input type="text" id="max-cal" value="4000">
+								<input type="text" id="ingredient-input">
 								<button class="btn btn-info" id="add-ingredient">Add Ingredient</button>
 
 						</div>
