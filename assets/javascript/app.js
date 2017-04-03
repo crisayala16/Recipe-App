@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	var ingredients = ["water", "flour", "eggs", "salt", "milk"];
-	var pluralIngredients = [];
 	var ingredient;
 	var queryUrl;
 	var currentRecipe;
@@ -25,52 +24,26 @@ $(document).ready(function(){
 	};
 	firebase.initializeApp(config);
 	var database = firebase.database();
-	function displayIngredientButtons(){
-		$("#ingredient-list").html("");
-		for(var q = 0; q < ingredients.length; q++){
-			$("#ingredient-list").append("<button class='btn btn-info'>"
-			+ ingredients[q] + "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
-		}
-	}
-$(document).on("click", "#new-recipe-btn", function(){
-	ingredients = ["water", "flour", "eggs", "salt", "milk"];
-	displayIngredientButtons();
-
-});
 
 //On click event to add new ingredients
 $(document).on("click", "#add-ingredient", function(){
 	ingredient = $("#ingredient-input").val().trim();
-	var pluralIng = ingredient + "s";
-	var pluralIng2 = ingredient + "es";
 	ingredients.push(ingredient);
-	pluralIngredients.push(pluralIng);
-	pluralIngredients.push(pluralIng2);
-	console.log(pluralIngredients);
-
-	displayIngredientButtons();
+	$("#ingredient-list").append("<button class='btn btn-info'>"
+		+ ingredient + "</button>");
 	$("#ingredient-input").val("");
 	console.log(ingredients);
 });
-
-$(document).on("click", "#remove-ingredient", function(){
-	var ingIndex = $(this).attr("index");
-	ingredients.splice(ingIndex, 1);
-	displayIngredientButtons();
-
-})
 //on click event to add the food-type of the recipe search
 $(document).on("click", "#food-type-btn", function(){
 	foodType = $("#food-type-input").val().trim();
 	$("#food-type-area").html("<button class='btn btn-info'>" + foodType + "</button>");
 	$("#food-type-input").val("");
-});
+}); 
 //On click event that launches the search query and matches recipes 
 //that contain the specified ingredients
 $(document).on("click", "#find-recipes", function(){
 	database.ref().set({});
-	ingredients = ingredients.concat(pluralIngredients);
-	console.log(ingredients);
 	var ingredientString = ingredients.join("+");
 	console.log(ingredientString);
 	minCal = $("#min-cal").val().trim();
@@ -127,13 +100,13 @@ $(document).on("click", "#find-recipes", function(){
 					var fullIngredients = currentRecipe.ingredientLines;
 					var recYield = currentRecipe.yield;
 					var recCalories = Math.round(currentRecipe.calories);
+					var recUri = currentRecipe.uri.replace(/#/g, "%23");
 
 					var div = $("<div class='recipe-box'>");
-					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html' target='_blank'>" + recLabel + "</a></h3>");
+					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html?r=" + recUri + "' target='_blank'>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-					// div.append("<h4>" + fullIngredients + "</h4>");
 					$("#recipes").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
@@ -161,7 +134,6 @@ $(document).on("click", "#find-recipes", function(){
 		var order = $(this).attr("order");
 		console.log(this);
 		var thisLabel;
-		var thisUrl;
 		console.log("start");
 
 		database.ref().on("value", function(snapshot){
@@ -169,15 +141,9 @@ $(document).on("click", "#find-recipes", function(){
 			var keys = Object.keys(data);
 			var clickedRecipe = keys[order];
 			thisLabel = data[clickedRecipe].label;
-			thisUrl = data[clickedRecipe].url;
-
 			console.log(thisLabel);
-			var aTag = $("<a href='" + thisUrl + "' target='_blank'>")
-			var h2 = $("<h2 class='text-center rec-rep-label'>");
+			var h2 = $("<h2 class='text-center'>");
 			h2.html(thisLabel);
-			// window.location.replace("recipe.html");
-			aTag.html(h2);
-			$("#recent-recipes").append(aTag);
 			$("#full-detail").append(h2);
 			console.log("finished");
 
