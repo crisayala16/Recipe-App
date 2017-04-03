@@ -129,7 +129,7 @@ $(document).on("click", "#find-recipes", function(){
 					var recCalories = Math.round(currentRecipe.calories);
 
 					var div = $("<div class='recipe-box'>");
-					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a>" + recLabel + "</a></h3>");
+					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html' target='_blank'>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
@@ -161,6 +161,7 @@ $(document).on("click", "#find-recipes", function(){
 		var order = $(this).attr("order");
 		console.log(this);
 		var thisLabel;
+		var thisUrl;
 		console.log("start");
 
 		database.ref().on("value", function(snapshot){
@@ -168,10 +169,15 @@ $(document).on("click", "#find-recipes", function(){
 			var keys = Object.keys(data);
 			var clickedRecipe = keys[order];
 			thisLabel = data[clickedRecipe].label;
+			thisUrl = data[clickedRecipe].url;
+
 			console.log(thisLabel);
-			var h2 = $("<h2 class='text-center'>");
+			var aTag = $("<a href='" + thisUrl + "' target='_blank'>")
+			var h2 = $("<h2 class='text-center rec-rep-label'>");
 			h2.html(thisLabel);
 			// window.location.replace("recipe.html");
+			aTag.html(h2);
+			$("#recent-recipes").append(aTag);
 			$("#full-detail").append(h2);
 			console.log("finished");
 
