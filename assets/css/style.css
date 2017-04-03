@@ -4,18 +4,30 @@
 	opacity: 0.95;
 }
 input{
-	width: 60% !important;
+	width: 50% !important;
 	margin: 0 auto;
 }
 body{
 	background: url("../images/food-bg.jpg");
 }
-.btn{
-	margin: 5px;
+#timer-box{
+	height: 500px;
 }
 #recipes{
 	overflow: auto;
 }
-#recipe-box{
+button{
+	margin: 5px;
+}
+.recipe-box{
 	border: 2px dashed #fff;
+}
+#food-type-btn{
+	margin-bottom: 5px;
+}
+#remove-ingredient:hover{
+	color: red;
+}
+.jumbotron{
+	background: #7da3a2;
 }

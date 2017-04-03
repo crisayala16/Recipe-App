@@ -4,76 +4,105 @@
 	<title>Recipe App</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootswatch.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid jumbotron text-center">
+	<!-- Header jumbotron -->
+	<div class="container-fluid jumbotron text-center bg-primary">
 		<h1>Recipe App</h1>
 	</div>
+	<!-- End of Header -->
 	<div class="container-fluid">
 		<div class="row">
+			<!-- Recent Recipes section -->
 			<div class="col-md-3">
-				<div class="well" id="recentRecipes">
+				<div class="well">
 					<h4 class="page-header text-center">Recent Recipes</h4>
 				</div>
 			</div>
+			<!-- End of recent section -->
+			<!-- Recipes section -->
 			<div class="col-md-7">
 				<div class="well text-center" id="recipes">
-				<h2 class="page-header">Recipes <button class="btn btn-success" data-toggle="modal" data-target="#recipe-modal" data-backdrop="static">New Recipe</button></h2>
+				<h2 class="page-header">Recipes <button class="btn btn-success" id="new-recipe-btn" data-toggle="modal" data-target="#recipe-modal" data-backdrop="static">New Recipe</button></h2>
 				</div>
 			</div>
+			<!-- End of Recipes section -->
+			<!-- Modal -->
 			<div class="modal fade" id="recipe-modal">
 				<div class="modal-dialog">
 					<div class="modal-content">
+						<!-- Modal Header -->
 						<div class="modal-header">
 							<div class="row">
+								<!-- My Ingredient section -->
 								<div class="col-xs-6">
 									<h3>My Ingredients</h3>
-							<div id="ingredient-list"></div>
-							</div>
-							<div class="col-xs-6">
-								<h3>Food Type</h3>
-								<div id="food-type-area"></div>
-							</div>
+									<div id="ingredient-list"></div>
 								</div>
+								<!-- end of my ingredient section -->
+								<!-- Food Type section -->
+								<div class="col-xs-6">
+									<h3>Food Type</h3>
+									<div id="food-type-area"></div>
+								</div>
+								<!-- End of Food type section -->
+							</div>
+						</div>
+						<!-- End of Modal Header -->
+						<!-- Modal Body -->
+						<div class="modal-body">
+							<div class="row">
+								<label class="col-xs-12">What king of food are you looking for?</label>
+							<input type="text" id="food-type-input" placeholder="Ex: Mexican, Italian, Asian">
+							<button class="btn btn-info" id="food-type-btn">Add Food Type</button>
+							</div>
+							<div class="row">
+							<label class="col-xs-12">Minimum Calories (per serving)</label>
+							<input type="text" id="min-cal" value="0">
+							<label class="col-xs-12">Maximum Calories (per serving)</label>
+							<input type="text" id="max-cal" value="4000">
+							</div>
+							<div class="row">
+							<label class="col-xs-12">List your Ingredients</label>
+								<input type="text" id="ingredient-input">
+							<button class="btn btn-info" id="add-ingredient">Add Ingredient</button>
 							</div>
 							
-						<div class="modal-body">
-								<label>What kind of food are you looking for?</label>
-								<input type="text" id="food-type-input" placeholder="Ex: Mexican, Italian, Asian">
-								<button class="btn btn-info" id="food-type-btn">Add Food Type</button>
-								<label>Minimum Calories (per serving)</label>
-								<input type="text" id="min-cal" value="0">
-								<label>Maximum Calories (per serving)</label>
-								<input type="text" id="max-cal" value="4000">
-								<input type="text" id="ingredient-input">
-								<button class="btn btn-info" id="add-ingredient">Add Ingredient</button>
+							
 
 						</div>
+						<!-- End of Modal Body -->
+						<!-- Modal footer -->
 						<div class="modal-footer">
 							<button class="btn btn-success" data-dismiss="modal" id="find-recipes">Find Recipes</button>
 
 							<button class="btn btn-primary" data-dismiss="modal">Close</button>
 						</div>
+						<!-- End of Modal footer -->
 					</div>
 				</div>
 			</div>
+			<!-- End of Modal -->
+			<!-- Timer section -->
 			<div class="col-md-2">
 				<div class="well text-center" id="timer-box">
 					<h2 class="page-header">Timer</h2>
 					<h2>00:00</h2>
 					<div class="form-group">
-							<label class="control-label">Hours</label>
-							<input type="text" class="form-control" id="hour-input">
-							<label class="control-label">Minutes</label>
-							<input type="text" class="form-control" id="minute-input">
-						</div>
+						<label class="control-label">Hours</label>
+						<input type="text" class="form-control" id="hour-input">
+						<label class="control-label">Minutes</label>
+						<input type="text" class="form-control" id="minute-input">
+					</div>
 					<button class="btn btn-success">Set Timer</button>
 				</div>
 			</div>
+			<!-- End of Timer section-->
 		</div>
 	</div>
 	<!-- firebase -->
