@@ -133,7 +133,7 @@ $(document).on("click", "#find-recipes", function(){
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-					div.append("<h4>" + fullIngredients + "</h4>");
+					// div.append("<h4>" + fullIngredients + "</h4>");
 					$("#recipes").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
