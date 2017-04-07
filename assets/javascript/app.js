@@ -29,14 +29,14 @@ $(document).ready(function(){
 		$("#ingredient-list").html("");
 		for(var q = 0; q < ingredients.length; q++){
 			$("#ingredient-list").append("<button class='btn btn-info'>"
-			+ ingredients[q] + "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
+				+ ingredients[q] + "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
 		}
 	}
-$(document).on("click", "#new-recipe-btn", function(){
-	ingredients = ["water", "flour", "eggs", "salt", "milk"];
-	displayIngredientButtons();
+	$(document).on("click", "#new-recipe-btn", function(){
+		ingredients = ["water", "flour", "eggs", "salt", "milk"];
+		displayIngredientButtons();
 
-});
+	});
 
 //On click event to add new ingredients
 $(document).on("click", "#add-ingredient", function(){
@@ -52,7 +52,7 @@ $(document).on("click", "#add-ingredient", function(){
 	$("#ingredient-input").val("");
 	console.log(ingredients);
 });
-
+//On click event to remove ingredients
 $(document).on("click", "#remove-ingredient", function(){
 	var ingIndex = $(this).attr("index");
 	ingredients.splice(ingIndex, 1);
@@ -65,8 +65,8 @@ $(document).on("click", "#food-type-btn", function(){
 	$("#food-type-area").html("<button class='btn btn-info'>" + foodType + "</button>");
 	$("#food-type-input").val("");
 });
-//On click event that launches the search query and matches recipes 
-//that contain the specified ingredients
+//On click event that launches the search query and matches recipes
+//containing the specified ingredients
 $(document).on("click", "#find-recipes", function(){
 	database.ref().set({});
 	ingredients = ingredients.concat(pluralIngredients);
@@ -107,11 +107,11 @@ $(document).on("click", "#find-recipes", function(){
 
 							if(lowerArray.indexOf(ingredients[y]) === -1){
 								lineHasIngredient = false;
-							} 
+							}
 							else if(lowerArray.indexOf(ingredients[y]) === 0){
 								lineHasIngredient = true;
 								console.log("Match!");
-								matchingLines++;	
+								matchingLines++;
 								console.log(matchingLines);
 							}
 						}
@@ -127,18 +127,19 @@ $(document).on("click", "#find-recipes", function(){
 					var fullIngredients = currentRecipe.ingredientLines;
 					var recYield = currentRecipe.yield;
 					var recCalories = Math.round(currentRecipe.calories);
-
+					//Create a new dif then append it with the name, image, calories, & source
+					//of that specific recpe then append that div to the recipes div
 					var div = $("<div class='recipe-box'>");
 					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html' target='_blank'>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-<!-- 					div.append("<h4> " + fullIngredients + " </h4>"); -->
+					<!-- 				div.append("<h4> " + fullIngredients + " </h4>"); -->
 					$("#recipes").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
 
-
+					//Firebase set up
 					database.ref().push({
 						image: recImage,
 						label: recLabel,
@@ -161,7 +162,6 @@ $(document).on("click", "#find-recipes", function(){
 		var order = $(this).attr("order");
 		console.log(this);
 		var thisLabel;
-		console.log("start");
 
 		database.ref().on("value", function(snapshot){
 			var data = snapshot.val();
@@ -176,10 +176,10 @@ $(document).on("click", "#find-recipes", function(){
 
 		});
 	});
-
+	//Youtube search & display
 	$(document).on("click", "#youtube-search", function(){
 		var videoName = $("#youtube-search-input").val().trim();
-		var youtubeUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&order=viewCount&q=" + 
+		var youtubeUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&order=viewCount&q=" +
 		videoName + "&type=video&key=AIzaSyAUhUJcpkPnQDHOHQbCydvp6gce41ueG6s";
 		var videoId1;
 		var videoId2;
@@ -190,12 +190,15 @@ $(document).on("click", "#find-recipes", function(){
 			var vids = videos.items;
 			videoId1 = vids[0].id.videoId;
 			videoId2 = vids[1].id.videoId;
+			videoId3 = vids[2].id.videoId;
 			console.log(videoId1);
 			console.log(videoId2);
+			console.log(videoId3);
 			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId1 + "' frameborder='0' allowfullscreen></iframe>");
 			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId2 + "' frameborder='0' allowfullscreen></iframe>");
-			
+			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId3 + "' frameborder='0' allowfullscreen></iframe>");
+
 
 		});
-	})	
+	})
 });
