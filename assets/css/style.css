@@ -52,3 +52,15 @@ li, td{
 	color: black;
 	font-size: 18px;
 }
+#login-well, #signUp-well{
+	width: 50%;
+	height: auto;
+	margin: 0 auto;
+	color: black;
+}
+.page-header{
+	margin-top: 10px;
+}
+#error-mess{
+	color: red;
+}

@@ -11,106 +11,152 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<!-- Header jumbotron -->
-	<div class="container-fluid jumbotron text-center">
-		<h1>Recipe App</h1>
+	<div class="container-fluid" id="login-page">
+		<div class="jumbotron text-center">
+			<h1>Welcome to the Recipe App!</h1>
+		</div>
+		<!-- Log In -->
+		<div class="well" id="login-well">
+			<h3 class="page-header" id="login-header">Login</h3>
+			<div id="error-mess" class="text-center"></div>
+			<form>
+				<label class="col-xs-12">Email</label>
+				<input type="text" id="email-input-login" placeholder="Email">
+				<label class="col-xs-12">Password</label>
+				<input type="password" id="password-input-login" placeholder="Password">
+			</form>
+			<button class="btn btn-primary" id="login-btn">Login</button>
+			<p>Dont have an account yet?<a href='#' id="go-to-signUp">Sign up for free</a></p>
+		</div>
+		<!-- Sign In -->
+		<div class="well hide" id="signUp-well">
+			<h3 class="page-header" id="signUp-header">Sign Up</h3>
+			<form>
+				<label class="col-xs-12">Email</label>
+				<input type="text" id="email-input-signUp" placeholder="Email">
+				<label class="col-xs-12">Password</label>
+				<p>* must be 6 characters</p>
+				<input type="password" id="password-input-signUp" placeholder="Password">
+			</form>
+			<button class="btn btn-primary" id="signUp-btn">Sign Up</button>
+			<p>Already have an account?<a href='#' id="go-to-login"> Log In</a></p>
+			
+		</div>
 	</div>
-	<!-- End of Header -->
-	<div class="container-fluid">
-		<div class="row">
-			<!-- Recent Recipes section -->
-			<div class="col-md-3">
-				<div class="well" id="recent-recipes">
-					<h4 class="page-header text-center">Recent Recipes</h4>
+	<div class="hide" id="app-content">
+		<!-- Header jumbotron -->
+		<div class="container-fluid jumbotron text-center">
+			<h1>Recipe App</h1>
+			<button class="btn btn-primary" id="logOut-btn">Log Out</button>
+		</div>
+		<!-- End of Header -->
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Recent Recipes section -->
+				<div class="col-md-3">
+					<div class="well" id="recent-recipes">
+						<h4 class="page-header text-center">Recent Recipes</h4>
+					</div>
 				</div>
-			</div>
-			<!-- End of recent section -->
-			<!-- Recipes section -->
-			<div class="col-md-7">
-				<div class="well text-center" id="recipes">
-				<h2 class="page-header">Recipes <button class="btn btn-success" id="new-recipe-btn" data-toggle="modal" data-target="#recipe-modal" data-backdrop="static">New Recipe</button></h2>
+				<!-- End of recent section -->
+				<!-- Recipes section -->
+				<div class="col-md-7">
+					<div class="well text-center" id="recipes">
+						<h2 class="page-header">Recipes <button class="btn btn-success" id="new-recipe-btn" data-toggle="modal" data-target="#recipe-modal" data-backdrop="static">New Recipe</button></h2>
+					</div>
 				</div>
-			</div>
-			<!-- End of Recipes section -->
-			<!-- Modal -->
-			<div class="modal fade" id="recipe-modal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<div class="row">
-								<!-- My Ingredient section -->
-								<div class="col-xs-6">
-									<h3>My Ingredients</h3>
-									<div id="ingredient-list"></div>
+				<!-- End of Recipes section -->
+				<!-- Modal -->
+				<div class="modal fade" id="recipe-modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<div class="row">
+									<!-- My Ingredient section -->
+									<div class="col-xs-6">
+										<h3>My Ingredients</h3>
+										<div id="ingredient-list"></div>
+									</div>
+									<!-- end of my ingredient section -->
+									<!-- Food Type section -->
+									<div class="col-xs-6">
+										<h3>Food Type</h3>
+										<div id="food-type-area"></div>
+									</div>
+									<!-- End of Food type section -->
 								</div>
-								<!-- end of my ingredient section -->
-								<!-- Food Type section -->
-								<div class="col-xs-6">
-									<h3>Food Type</h3>
-									<div id="food-type-area"></div>
+							</div>
+							<!-- End of Modal Header -->
+							<!-- Modal Body -->
+							<div class="modal-body">
+								<div class="row">
+									<label class="col-xs-12">What king of food are you looking for?</label>
+									<input type="text" id="food-type-input" placeholder="Ex: Mexican, Italian, Asian">
+									<button class="btn btn-info" id="food-type-btn">Add Food Type</button>
 								</div>
-								<!-- End of Food type section -->
-							</div>
-						</div>
-						<!-- End of Modal Header -->
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<div class="row">
-								<label class="col-xs-12">What king of food are you looking for?</label>
-							<input type="text" id="food-type-input" placeholder="Ex: Mexican, Italian, Asian">
-							<button class="btn btn-info" id="food-type-btn">Add Food Type</button>
-							</div>
-							<div class="row">
-							<label class="col-xs-12">Minimum Calories (per serving)</label>
-							<input type="text" id="min-cal" value="0">
-							<label class="col-xs-12">Maximum Calories (per serving)</label>
-							<input type="text" id="max-cal" value="4000">
-							</div>
-							<div class="row">
-							<label class="col-xs-12">List your Ingredients</label>
-								<input type="text" id="ingredient-input">
-							<button class="btn btn-info" id="add-ingredient">Add Ingredient</button>
-							</div>
-							
-							
+								<div class="row">
+									<label class="col-xs-12">Minimum Calories (per serving)</label>
+									<input type="text" id="min-cal" value="0">
+									<label class="col-xs-12">Maximum Calories (per serving)</label>
+									<input type="text" id="max-cal" value="4000">
+								</div>
+								<div class="row">
+									<label class="col-xs-12">List your Ingredients</label>
+									<input type="text" id="ingredient-input">
+									<button class="btn btn-info" id="add-ingredient">Add Ingredient</button>
+								</div>
 
-						</div>
-						<!-- End of Modal Body -->
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<button class="btn btn-success" data-dismiss="modal" id="find-recipes">Find Recipes</button>
 
-							<button class="btn btn-primary" data-dismiss="modal">Close</button>
+
+							</div>
+							<!-- End of Modal Body -->
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button class="btn btn-success" data-dismiss="modal" id="find-recipes">Find Recipes</button>
+
+								<button class="btn btn-primary" data-dismiss="modal">Close</button>
+							</div>
+							<!-- End of Modal footer -->
 						</div>
-						<!-- End of Modal footer -->
+					</div>
+				</div>
+				<!-- End of Modal -->
+				<!-- Timer section -->
+				<div class="col-md-2">
+					<div class="well text-center" id="timer-box">
+						<h2 class="page-header">Timer</h2>
+						<h2 id="timer">00:00</h2>
+						<div class="form-group">
+							<label class="control-label">Minutes</label>
+							<input type="text" class="form-control" id="minute-input">
+							<label class="control-label">Seconds</label>
+							<input type="text" class="form-control" id="seconds-input">
+						</div>
+						<button id="btn-start" class="btn-success">Set Timer</button>
 					</div>
 				</div>
 			</div>
-			<!-- End of Modal -->
-			<!-- Timer section -->
-			<div class="col-md-2">
-				<div class="well text-center" id="timer-box">
-					<h2 class="page-header">Timer</h2>
-					<h2>00:00</h2>
-					<div class="form-group">
-						<label class="control-label">Hours</label>
-						<input type="text" class="form-control" id="hour-input">
-						<label class="control-label">Minutes</label>
-						<input type="text" class="form-control" id="minute-input">
-					</div>
-					<button class="btn btn-success">Set Timer</button>
-				</div>
-			</div>
+		</div>
+		<audio controls loop id="myAudio">
+			<source src="assets/audio/KidTimeUp.mp3"  
+			type="audio/mp3">
+			<audio loop id="myAudia">
+				<source src="assets/audio/Clap.mp3"
+				type="audio/mp3">
+			</audio>
 			<!-- End of Timer section-->
 		</div>
-		</div>
 	</div>
-	<!-- firebase -->
-	<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-	<!-- JQuery -->
-	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-	<!-- app.js -->
-	<script type="text/javascript" src="assets/javascript/app.js"></script>
+</div>
+
+<!-- firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="assets/javascript/jquery.countdownTimer.js"></script>
+
+<!-- app.js -->
+<script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>
 </html>
