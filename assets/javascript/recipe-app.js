@@ -4,7 +4,7 @@ function playAudio(){
 	var audio = document.getElementById('myAudia');
 	audio.play();
 	var pauseSound = setTimeout(function(){
-		y.pause();
+		audio.pause();
 	},5000);
 };
 //starts the timer
