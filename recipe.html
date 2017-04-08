@@ -13,23 +13,100 @@
 <body>
 	<!-- Header jumbotron -->
 	<div class="container-fluid jumbotron text-center">
-		<h1>Recipe App</h1>
+		<h1> Recipe App </h1>
+		<h2> Details for <span class="recipe_name">...</span> </h2>
 	</div>
 	<!-- End of Header -->
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Recipes section -->
-			<div class="col-xs-12">
-				<div class="well text-center" id="recipe-detail"></div>
-			</div>
-			<!-- End of Recipes section -->
+			<div>
+				<div class="well text-center" id="recipe-detail">
+
+					<div class="col-md-8">
+						<div class="row">
+							<div class="col-sm-6">
+								<img src="" id="recipe_img">
+							</div>
+							<div class="col-sm-6">
+								<h3 class="recipe_name">...</h3>
+								<h4 class="text-center">See full recipe on: <a id="source-link" href="#"><span id="rec-source"></span></a></h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<h3 class="page-header text-center">Ingredients</h3>
+								<div id="ingredient_list"></div>
+							</div>
+							<div class="col-sm-4 text-center">
+								<h3 class="page-header text-center"> Nutrition Information </h3>
+								<table>
+									<tr> <td>Calories: </td> <td id="calories">N/A</td> </tr>
+
+									<tr> <td>Total Fat: </td> <td id="fat">N/A</td> </tr>
+
+										<tr> <td>Saturated Fat: </td> <td id="fasat"> N/A </td> </tr>
+										<tr> <td>Trans Fat: </td> <td id="trans"> N/A </td> </tr>
+										<tr> <td>Carbs: </td> <td id="carbs"> N/A </td> </tr>
+										<tr> <td>Sodium: </td> <td id="sodium"> N/A </td> </tr>
+										<tr> <td>Fiber: </td> <td id="fiber"> N/A </td> </tr>
+							<!--
+							Total Carbohydrate
+							Dietary Fiber == FIBTG
+							Sugars ==> “SUGAR”
+							Protein ==> “PRONCT”
+							Cholesterol ==> CHOLE
+							Vitamins
+							Calcium
+						-->
+					</table>
+				</div>
+						<!-- Timer section -->
+							<div class="col-sm-4">
+							<div class="well text-center" id="timer-box">
+								<h2 class="page-header">Timer</h2>
+								<h2 id="timer">00:00</h2>
+								<div class="form-group">
+									<label class="control-label">Minutes</label>
+									<input type="text" class="form-control" id="minute-input">
+									<label class="control-label">Seconds</label>
+									<input type="text" class="form-control" id="seconds-input">
+								</div>
+								<button id="btn-start" class="btn-success">Set Timer</button>
+							</div>
+						</div>
+					<audio controls loop class="hide" id="myAudio">
+					<source src="assets/audio/KidTimeUp.mp3"
+					type="audio/mp3">
+					<audio loop id="myAudia">
+						<source src="assets/audio/Clap.mp3"
+						type="audio/mp3">
+					</audio>
+					<!-- End of Timer section-->
+				</div>
+
 		</div>
-	</div>
-	<!-- firebase -->
-	<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-	<!-- JQuery -->
-	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-	<!-- app.js -->
-	<script type="text/javascript" src="assets/javascript/app.js"></script>
+		<!-- Youtube search results and display -->
+		<div class="col-lg-4 col-md-4">
+			<h3 class="col-sm-12">Look for a youtube video</h3>
+			<input type="text" id="youtube-search-input">
+			<button class="btn btn-success" id="youtube-search">Search</button>
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="youtube-vids-display"></div>
+		</div>
+	  </div>
+ </div>
+</div>
+</div>
+<!-- End of Recipes section -->
+</div>
+</div>
+<!-- firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+<!-- JQuery -->
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="assets/javascript/jquery.countdownTimer.js"></script>
+<!-- app.js -->
+<script type="text/javascript" src="assets/javascript/recipe-app.js"></script>
 </body>
 </html>

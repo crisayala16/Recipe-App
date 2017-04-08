@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	var ingredients = ["water", "flour", "eggs", "salt", "milk"];
-	var pluralIngredients = [];
 	var ingredient;
 	var queryUrl;
 	var currentRecipe;
@@ -10,7 +9,7 @@ $(document).ready(function(){
 	var lowerArray = [];
 	var matchingLines = 0;
 	var lineHasIngredient;
-	var foodType = "all";
+	var foodType = " ";
 	var minCal = "0";
 	var maxCal = "4000";
 	var health = "";
@@ -25,40 +24,83 @@ $(document).ready(function(){
 	};
 	firebase.initializeApp(config);
 	var database = firebase.database();
-	function displayIngredientButtons(){
-		$("#ingredient-list").html("");
-		for(var q = 0; q < ingredients.length; q++){
-			$("#ingredient-list").append("<button class='btn btn-info'>"
-				+ ingredients[q] + "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
-		}
-	}
-	$(document).on("click", "#new-recipe-btn", function(){
-		ingredients = ["water", "flour", "eggs", "salt", "milk"];
-		displayIngredientButtons();
-
+	var auth = firebase.auth();
+	$(document).on("click", "#login-btn", function(){
+		var emailSI = $("#email-input-login").val().trim();
+		var passSI = $("#password-input-login").val().trim();
+		var promise = auth.signInWithEmailAndPassword(emailSI, passSI);
+		promise.catch(e => $("#error-mess").html("Invalid Email or Password"));
+		$("#email-input-login").val("");
+		$("#password-input-login").val("");
 	});
+	$(document).on("click", "#signUp-btn", function(){
+		var emailSU = $("#email-input-signUp").val().trim();
+		var passSU = $("#password-input-signUp").val().trim();
+		var promise = auth.createUserWithEmailAndPassword(emailSU, passSU);
+		promise.catch(e => console.log(e.message));
+		$("#email-input-signUp").val("");
+		$("#password-input-signUp").val("");
+		auth.signInWithEmailAndPassword(emailSU, passSU);
+	});
+	$(document).on("click", "#logOut-btn", function(){
+		firebase.auth().signOut();
+	});
+	firebase.auth().onAuthStateChanged(firebaseUser => {
+		if(firebaseUser){
+			$("#app-content").removeClass("hide");
+			$("#login-page").addClass("hide");
+		}
+		else{
+			$("#app-content").addClass("hide");
+			$("#login-page").removeClass("hide");
+		}
+	});
+//displays the ingredients as buttons
+function displayIngredientButtons(){
+	$("#ingredient-list").html("");
+	for(var q = 0; q < ingredients.length; q++){
+		$("#ingredient-list").append("<button class='btn btn-info'>" + ingredients[q]
+			+ "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
+	}
+};
+//plays audi`o for timer
+function playAudio() {
+	var x = document.getElementById('myAudio', 'myAudia');
+	x.play();
+	console.log("music should play");
+	var pauseSound = setTimeout(function(){
+		x.pause();
+	},5000);
 
+};
+$(document).on("click", "#go-to-signUp", function(){
+	$("#login-well").addClass("hide");
+	$("#signUp-well").removeClass("hide");
+});
+$(document).on("click", "#go-to-login", function(){
+	$("#login-well").removeClass("hide");
+	$("#signUp-well").addClass("hide");
+});
+//resets input values
+$(document).on("click", "#new-recipe-btn", function(){
+	ingredients = ["water", "flour", "eggs", "salt", "milk"];
+	$("#food-type-area").html("");
+	displayIngredientButtons();
+});
 //On click event to add new ingredients
 $(document).on("click", "#add-ingredient", function(){
 	ingredient = $("#ingredient-input").val().trim();
-	var pluralIng = ingredient + "s";
-	var pluralIng2 = ingredient + "es";
 	ingredients.push(ingredient);
-	pluralIngredients.push(pluralIng);
-	pluralIngredients.push(pluralIng2);
-	console.log(pluralIngredients);
-
 	displayIngredientButtons();
 	$("#ingredient-input").val("");
 	console.log(ingredients);
 });
-//On click event to remove ingredients
+//removes ingredients
 $(document).on("click", "#remove-ingredient", function(){
 	var ingIndex = $(this).attr("index");
 	ingredients.splice(ingIndex, 1);
 	displayIngredientButtons();
-
-})
+});
 //on click event to add the food-type of the recipe search
 $(document).on("click", "#food-type-btn", function(){
 	foodType = $("#food-type-input").val().trim();
@@ -66,11 +108,9 @@ $(document).on("click", "#food-type-btn", function(){
 	$("#food-type-input").val("");
 });
 //On click event that launches the search query and matches recipes
-//containing the specified ingredients
+//that contain the specified ingredients
 $(document).on("click", "#find-recipes", function(){
 	database.ref().set({});
-	ingredients = ingredients.concat(pluralIngredients);
-	console.log(ingredients);
 	var ingredientString = ingredients.join("+");
 	console.log(ingredientString);
 	minCal = $("#min-cal").val().trim();
@@ -127,19 +167,18 @@ $(document).on("click", "#find-recipes", function(){
 					var fullIngredients = currentRecipe.ingredientLines;
 					var recYield = currentRecipe.yield;
 					var recCalories = Math.round(currentRecipe.calories);
-					//Create a new dif then append it with the name, image, calories, & source
-					//of that specific recpe then append that div to the recipes div
+					var recUri = currentRecipe.uri.replace(/#/g, "%23");
+
 					var div = $("<div class='recipe-box'>");
-					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html' target='_blank'>" + recLabel + "</a></h3>");
+					div.append("<h3 class='text-center' id='recipe-label' url='" + recUrl + "' order='" + onRecipe + "'><a href='recipe.html?r=" + recUri + "' target='_blank'>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-					<!-- 				div.append("<h4> " + fullIngredients + " </h4>"); -->
 					$("#recipes").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
 
-					//Firebase set up
+
 					database.ref().push({
 						image: recImage,
 						label: recLabel,
@@ -160,45 +199,29 @@ $(document).on("click", "#find-recipes", function(){
 
 	$(document).on("click", "#recipe-label", function(){
 		var order = $(this).attr("order");
-		console.log(this);
-		var thisLabel;
+		var thisLabel = $(this).text();
+		var thisUrl = $(this).attr("url");
+		var aTag = $("<a target='_blank' href='" + thisUrl + "'>");
+		var h2 = $("<h2 class='text-center'>");
+		h2.html(aTag);
+		aTag.html(thisLabel);
+		$("#recent-recipes").append(h2);
 
-		database.ref().on("value", function(snapshot){
-			var data = snapshot.val();
-			var keys = Object.keys(data);
-			var clickedRecipe = keys[order];
-			thisLabel = data[clickedRecipe].label;
-			console.log(thisLabel);
-			var h2 = $("<h2 class='text-center'>");
-			h2.html(thisLabel);
-			$("#full-detail").append(h2);
-			console.log("finished");
-
-		});
 	});
-	//Youtube search & display
-	$(document).on("click", "#youtube-search", function(){
-		var videoName = $("#youtube-search-input").val().trim();
-		var youtubeUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&order=viewCount&q=" +
-		videoName + "&type=video&key=AIzaSyAUhUJcpkPnQDHOHQbCydvp6gce41ueG6s";
-		var videoId1;
-		var videoId2;
-		$.ajax({
-			url: youtubeUrl,
-			method: "GET"
-		}).done(function(videos){
-			var vids = videos.items;
-			videoId1 = vids[0].id.videoId;
-			videoId2 = vids[1].id.videoId;
-			videoId3 = vids[2].id.videoId;
-			console.log(videoId1);
-			console.log(videoId2);
-			console.log(videoId3);
-			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId1 + "' frameborder='0' allowfullscreen></iframe>");
-			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId2 + "' frameborder='0' allowfullscreen></iframe>");
-			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId3 + "' frameborder='0' allowfullscreen></iframe>");
+	//Displays minutes & seconds on timer
+	$(document).on("click", "#btn-start", function(){
+		var min = $("#minute-input").val().trim();
+		var sec = $("#seconds-input").val().trim();
+		$("#minute-input").val("");
+		$("#seconds-input").val("");
 
+		$("#timer").countdowntimer({
+			minutes: min,
+			seconds : sec,
+			timeUp: playAudio
 
 		});
-	})
+
+	});
+
 });

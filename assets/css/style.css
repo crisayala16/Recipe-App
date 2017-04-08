@@ -31,3 +31,36 @@ button{
 .jumbotron{
 	background: #7da3a2;
 }
+a{
+	text-decoration: none;
+	text-decoration-line: none;
+}
+a:hover{
+	text-decoration: none;
+	text-decoration-line: none;
+	color: #fff;
+}
+#recipe-detail{
+	min-height: 900px;
+	height: auto;
+	width: auto;
+}
+iframe{
+	max-width: 350px;
+}
+li, td{
+	color: black;
+	font-size: 18px;
+}
+#login-well, #signUp-well{
+	width: 50%;
+	height: auto;
+	margin: 0 auto;
+	color: black;
+}
+.page-header{
+	margin-top: 10px;
+}
+#error-mess{
+	color: red;
+}
