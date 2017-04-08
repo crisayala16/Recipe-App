@@ -63,19 +63,12 @@ function displayIngredientButtons(){
 			+ "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
 	}
 };
-//plays audio for timer
-function playAudio() {
-	var y = document.getElementById('myAudia');
-	y.play();
-	console.log("music should play");
-	var pauseSound = setTimeout(function(){
-		y.pause();l
-	},5000);
-};
+//goes to sign-up section
 $(document).on("click", "#go-to-signUp", function(){
 	$("#login-well").addClass("hide");
 	$("#signUp-well").removeClass("hide");
 });
+//goes to login-section
 $(document).on("click", "#go-to-login", function(){
 	$("#login-well").removeClass("hide");
 	$("#signUp-well").addClass("hide");
@@ -92,7 +85,6 @@ $(document).on("click", "#add-ingredient", function(){
 	ingredients.push(ingredient);
 	displayIngredientButtons();
 	$("#ingredient-input").val("");
-	console.log(ingredients);
 });
 //removes ingredients
 $(document).on("click", "#remove-ingredient", function(){
@@ -128,7 +120,6 @@ $(document).on("click", "#find-recipes", function(){
 				currentRecipe = results[i].recipe;
 				matchingLines = 0;
 				lineHasIngredient = false;
-				console.log("Inside Recipe result number #" + i);
 				//Looks Inside each ingredient line
 				for(var x = 0; x < currentRecipe.ingredientLines.length; x++){
 					//Prepares the user ingredients in an array
@@ -149,9 +140,7 @@ $(document).on("click", "#find-recipes", function(){
 							} 
 							else if(lowerArray.indexOf(ingredients[y]) === 0){
 								lineHasIngredient = true;
-								console.log("Match!");
-								matchingLines++;	
-								console.log(matchingLines);
+								matchingLines++;
 							}
 						}
 					}
@@ -173,7 +162,6 @@ $(document).on("click", "#find-recipes", function(){
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
 					$("#recipe-display").append(div);
-					console.log("Recipe Posted!");
 					onRecipe++;
 				};
 			};

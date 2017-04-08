@@ -1,9 +1,8 @@
 $(document).ready(function(){
 //plays audio once timer finishes
 function playAudio(){
-	var y = document.getElementById('myAudia');
-	y.play();
-	console.log("music should play");
+	var audio = document.getElementById('myAudia');
+	audio.play();
 	var pauseSound = setTimeout(function(){
 		y.pause();
 	},5000);
@@ -19,6 +18,15 @@ $(document).on("click", "#btn-start", function(){
 		seconds : sec,
 		timeUp: playAudio
 	});
+});
+//stops the timer
+$(document).on("click", "#stopBtn", function(){
+	$("#timer").html("00:00");
+    var found;
+    for(var i=0; i<10000; i++)
+    {
+        window.clearInterval(i);
+    }
 });
 // retrieve the query string form the URL as an associtative array
 function getQuery() {
@@ -42,7 +50,6 @@ $(function() {
 		url: "https://api.edamam.com/search?r=" + getQuery()["r"],
 		method: "GET"
 	}).done(function(response) {
-		console.log(response);
 		var obj = response[0];
 		$(".recipe_name").text( obj.label );
 		$("#recipe_img").attr( "src", obj.image);
