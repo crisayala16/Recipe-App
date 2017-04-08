@@ -65,13 +65,12 @@ function displayIngredientButtons(){
 };
 //plays audio for timer
 function playAudio() {
-	var x = document.getElementById('myAudio', 'myAudia');
-	x.play();
+	var y = document.getElementById('myAudia');
+	y.play();
 	console.log("music should play");
 	var pauseSound = setTimeout(function(){
-		x.pause();
+		y.pause();l
 	},5000);
-
 };
 $(document).on("click", "#go-to-signUp", function(){
 	$("#login-well").addClass("hide");
@@ -112,7 +111,7 @@ $(document).on("click", "#food-type-btn", function(){
 $(document).on("click", "#find-recipes", function(){
 	database.ref().set({});
 	var ingredientString = ingredients.join("+");
-	console.log(ingredientString);
+	$("#recipe-display").html("");
 	minCal = $("#min-cal").val().trim();
 	maxCal = $("#max-cal").val().trim();
 	queryUrl = "https://api.edamam.com/search?q=" + foodType
@@ -168,27 +167,14 @@ $(document).on("click", "#find-recipes", function(){
 					var recYield = currentRecipe.yield;
 					var recCalories = Math.round(currentRecipe.calories);
 					var recUri = currentRecipe.uri.replace(/#/g, "%23");
-
 					var div = $("<div class='recipe-box'>");
 					div.append("<h3 class='text-center' id='recipe-label' url='" + recUrl + "' order='" + onRecipe + "'><a href='recipe.html?r=" + recUri + "' target='_blank'>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-					$("#recipes").append(div);
+					$("#recipe-display").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
-
-
-					database.ref().push({
-						image: recImage,
-						label: recLabel,
-						source: recSource,
-						url: recUrl,
-						ingredients: fullIngredients,
-						yield: recYield,
-						calories: recCalories,
-					});
-
 				};
 			};
 			//End of Ingredient Matching Algorithm
@@ -196,7 +182,6 @@ $(document).on("click", "#find-recipes", function(){
 		//End of Ajax call
 	});
 	//End of find recipes on click
-
 	$(document).on("click", "#recipe-label", function(){
 		var order = $(this).attr("order");
 		var thisLabel = $(this).text();
@@ -206,24 +191,5 @@ $(document).on("click", "#find-recipes", function(){
 		h2.html(aTag);
 		aTag.html(thisLabel);
 		$("#recent-recipes").append(h2);
-
 	});
-	$(document).on("click", "#btn-start", function(){
-		var min = $("#minute-input").val().trim();
-		var sec = $("#seconds-input").val().trim();
-		$("#minute-input").val("");
-		$("#seconds-input").val("");
-
-		$("#timer").countdowntimer({
-			minutes: min,
-			seconds : sec,
-			timeUp: playAudio
-
-		});
-
-	});
-
-
-
-
 });
