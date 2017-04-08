@@ -9,7 +9,7 @@ $(document).ready(function(){
 	var lowerArray = [];
 	var matchingLines = 0;
 	var lineHasIngredient;
-	var foodType = "all";
+	var foodType = " ";
 	var minCal = "0";
 	var maxCal = "4000";
 	var health = "";
@@ -24,28 +24,94 @@ $(document).ready(function(){
 	};
 	firebase.initializeApp(config);
 	var database = firebase.database();
-
+	var auth = firebase.auth();
+	$(document).on("click", "#login-btn", function(){
+		var emailSI = $("#email-input-login").val().trim();
+		var passSI = $("#password-input-login").val().trim();
+		var promise = auth.signInWithEmailAndPassword(emailSI, passSI);
+		promise.catch(e => $("#error-mess").html("Invalid Email or Password"));
+		$("#email-input-login").val("");
+		$("#password-input-login").val("");
+	});
+	$(document).on("click", "#signUp-btn", function(){
+		var emailSU = $("#email-input-signUp").val().trim();
+		var passSU = $("#password-input-signUp").val().trim();
+		var promise = auth.createUserWithEmailAndPassword(emailSU, passSU);
+		promise.catch(e => console.log(e.message));
+		$("#email-input-signUp").val("");
+		$("#password-input-signUp").val("");
+		auth.signInWithEmailAndPassword(emailSU, passSU);
+	});
+	$(document).on("click", "#logOut-btn", function(){
+		firebase.auth().signOut();
+	});
+	firebase.auth().onAuthStateChanged(firebaseUser => {
+		if(firebaseUser){
+			$("#app-content").removeClass("hide");
+			$("#login-page").addClass("hide");
+		}
+		else{
+			$("#app-content").addClass("hide");
+			$("#login-page").removeClass("hide");
+		}
+	});
+//displays the ingredients as buttons
+function displayIngredientButtons(){
+	$("#ingredient-list").html("");
+	for(var q = 0; q < ingredients.length; q++){
+		$("#ingredient-list").append("<button class='btn btn-info'>" + ingredients[q]
+			+ "  <span id='remove-ingredient' index='" + q + "' class='glyphicon glyphicon-remove'></span></button>");
+	}
+};
+//plays audio for timer
+function playAudio() {
+	var y = document.getElementById('myAudia');
+	y.play();
+	console.log("music should play");
+	var pauseSound = setTimeout(function(){
+		y.pause();l
+	},5000);
+};
+$(document).on("click", "#go-to-signUp", function(){
+	$("#login-well").addClass("hide");
+	$("#signUp-well").removeClass("hide");
+});
+$(document).on("click", "#go-to-login", function(){
+	$("#login-well").removeClass("hide");
+	$("#signUp-well").addClass("hide");
+});
+//resets input values
+$(document).on("click", "#new-recipe-btn", function(){
+	ingredients = ["water", "flour", "eggs", "salt", "milk"];
+	$("#food-type-area").html("");
+	displayIngredientButtons();
+});
 //On click event to add new ingredients
 $(document).on("click", "#add-ingredient", function(){
 	ingredient = $("#ingredient-input").val().trim();
 	ingredients.push(ingredient);
-	$("#ingredient-list").append("<button class='btn btn-info'>"
-		+ ingredient + "</button>");
+	displayIngredientButtons();
 	$("#ingredient-input").val("");
 	console.log(ingredients);
+});
+//removes ingredients
+$(document).on("click", "#remove-ingredient", function(){
+	var ingIndex = $(this).attr("index");
+	ingredients.splice(ingIndex, 1);
+	displayIngredientButtons();
 });
 //on click event to add the food-type of the recipe search
 $(document).on("click", "#food-type-btn", function(){
 	foodType = $("#food-type-input").val().trim();
 	$("#food-type-area").html("<button class='btn btn-info'>" + foodType + "</button>");
 	$("#food-type-input").val("");
-}); 
+});
 //On click event that launches the search query and matches recipes 
 //that contain the specified ingredients
 $(document).on("click", "#find-recipes", function(){
 	database.ref().set({});
 	var ingredientString = ingredients.join("+");
-	console.log(ingredientString);
+	$("#recipe-display").html("");
 	minCal = $("#min-cal").val().trim();
 	maxCal = $("#max-cal").val().trim();
 	queryUrl = "https://api.edamam.com/search?q=" + foodType
@@ -101,27 +167,14 @@ $(document).on("click", "#find-recipes", function(){
 					var recYield = currentRecipe.yield;
 					var recCalories = Math.round(currentRecipe.calories);
 					var recUri = currentRecipe.uri.replace(/#/g, "%23");
-
 					var div = $("<div class='recipe-box'>");
-					div.append("<h3 class='text-center' id='recipe-label' order='" + onRecipe + "'><a href='recipe.html?r=" + recUri + "' target='_blank'>" + recLabel + "</a></h3>");
+					div.append("<h3 class='text-center' id='recipe-label' url='" + recUrl + "' order='" + onRecipe + "'><a href='recipe.html?r=" + recUri + "' target='_blank'>" + recLabel + "</a></h3>");
 					div.append("<img src='" + recImage + "'>");
 					div.append("<h4>" + recCalories + " Calories</h4>");
 					div.append("<h4>" + recSource + "</h4>");
-					$("#recipes").append(div);
+					$("#recipe-display").append(div);
 					console.log("Recipe Posted!");
 					onRecipe++;
-
-
-					database.ref().push({
-						image: recImage,
-						label: recLabel,
-						source: recSource,
-						url: recUrl,
-						ingredients: fullIngredients,
-						yield: recYield,
-						calories: recCalories,
-					});
-
 				};
 			};
 			//End of Ingredient Matching Algorithm
@@ -129,46 +182,14 @@ $(document).on("click", "#find-recipes", function(){
 		//End of Ajax call
 	});
 	//End of find recipes on click
-
 	$(document).on("click", "#recipe-label", function(){
 		var order = $(this).attr("order");
-		console.log(this);
-		var thisLabel;
-		console.log("start");
-
-		database.ref().on("value", function(snapshot){
-			var data = snapshot.val();
-			var keys = Object.keys(data);
-			var clickedRecipe = keys[order];
-			thisLabel = data[clickedRecipe].label;
-			console.log(thisLabel);
-			var h2 = $("<h2 class='text-center'>");
-			h2.html(thisLabel);
-			$("#full-detail").append(h2);
-			console.log("finished");
-
-		});
+		var thisLabel = $(this).text();
+		var thisUrl = $(this).attr("url");
+		var aTag = $("<a target='_blank' href='" + thisUrl + "'>");
+		var h2 = $("<h2 class='text-center'>");
+		h2.html(aTag);
+		aTag.html(thisLabel);
+		$("#recent-recipes").append(h2);
 	});
-
-	$(document).on("click", "#youtube-search", function(){
-		var videoName = $("#youtube-search-input").val().trim();
-		var youtubeUrl = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&order=viewCount&q=" + 
-		videoName + "&type=video&key=AIzaSyAUhUJcpkPnQDHOHQbCydvp6gce41ueG6s";
-		var videoId1;
-		var videoId2;
-		$.ajax({
-			url: youtubeUrl,
-			method: "GET"
-		}).done(function(videos){
-			var vids = videos.items;
-			videoId1 = vids[0].id.videoId;
-			videoId2 = vids[1].id.videoId;
-			console.log(videoId1);
-			console.log(videoId2);
-			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId1 + "' frameborder='0' allowfullscreen></iframe>");
-			$("#recent-recipes").append("<iframe width='350' height='240' src='https://www.youtube.com/embed/" + videoId2 + "' frameborder='0' allowfullscreen></iframe>");
-			
-
-		});
-	})	
 });

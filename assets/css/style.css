@@ -10,8 +10,12 @@ input{
 body{
 	background: url("../images/food-bg.jpg");
 }
-#timer-box{
-	height: 500px;
+#timer-box,{
+	height: 440px;
+}
+#youtube-box{
+	min-height: 440px;
+	height: auto;
 }
 #recipes{
 	overflow: auto;
@@ -39,4 +43,29 @@ a:hover{
 	text-decoration: none;
 	text-decoration-line: none;
 	color: #fff;
+}
+#recipe-detail{
+	min-height: 900px;
+	height: auto;
+	width: auto;
+}
+iframe{
+	max-width: 350px;
+	margin-top: 10px;
+}
+li{
+	color: black;
+	font-size: 18px;
+}
+#login-well, #signUp-well{
+	width: 50%;
+	height: auto;
+	margin: 0 auto;
+	color: black;
+}
+.page-header{
+	margin-top: 10px;
+}
+#error-mess{
+	color: red;
 }
